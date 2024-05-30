@@ -29,6 +29,15 @@ in your local computer.
 pip install pyqtgraph pyserial pyQt5 numpy
 ```
 
+## Hardware Setup
+
+1. Make sure all of the sensors are connected to DAQ board. If you are not sure about the wiring, please contect to relavent PIC.
+2. Remove the one side of jumper wire (orange) that is connected to channel A0 of ADS1115 external ADC module.
+3. Connect red and black aligator clip to 12VDC battery to power pressure transducer.
+4. Re-connect the one side of jumper wire that is connected to channel A0 of ADS1115.
+5. Connect Teensy 4.1 and a laptop using a USB cable.
+6. After the experiment, disconnect the jumper wire connected to A0 of ADS1115, then remove 12VDC battery.
+
 ## Usage
 
 You need to specify which serial port is going to be used. For example, if the DAQ MCU is connected to COM6 port, set port argument to 'COM6'. Also, you can change the sensor rate (ms) and plot update rate (ms). The example below hears COM6 port. DAQ sensor rate is 10 ms (100Hz), and real time plot update rate is 25 ms (40Hz).
