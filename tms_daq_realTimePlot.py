@@ -126,7 +126,7 @@ class RealTimePlot(QObject):
 
         # Open the serial port
         self._ser = serial.Serial(port, baud_rate)
-        self._data_packet = bytearray(18)
+        self._data_packet = bytearray(22)
 
         # Create the PyQtGraph window
         self._win = pg.GraphicsLayoutWidget(show=True)
@@ -237,10 +237,11 @@ class RealTimePlot(QObject):
                 thrust_gram = struct.unpack('f', self._data_packet[12:16])[0] # unit: gram
                 thrust_Newton = thrust_gram * 0.001 * 9.81;
                 pressRaw = struct.unpack('h', self._data_packet[16:18])[0] # raw voltage readings of pressure
+                surf_tempC = struct.unpack('f', self._data_packet[18:22])[0] # unit: degC
 
                 # values = line.decode().strip().split(sep)
-                raw_data = [timeStamp, pressBar, pressRaw, tempC, thrust_Newton]
-                #print(raw_data)
+                raw_data = [timeStamp, pressBar, pressRaw, tempC, thrust_Newton, surf_tempC]
+                print(raw_data)
                 if self._time_from_serial:
                     data = raw_data[0], raw_data[1:]
                 else:
@@ -286,6 +287,7 @@ if __name__ == "__main__":
         "chamber_press_adc_raw",
         "chamber_temp",
         "thrust",
+        "surf_temp"
     ]  # list of datas.
     plotter = RealTimePlot(data_set=datas, port="/dev/tty.usbmodem147653001", update_rate=25, sensor_rate=10)
     plotter.run()
